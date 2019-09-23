@@ -14,47 +14,53 @@ import Model.Image;
 
 public class Run {
 	Image image = new Image();
-	String path ;
+	String path;
+
 	public static void main(String[] args) {
 		new Run().Getimage();
 	}
 
 	private void Getimage() {
+		System.out.println("image only jpg supported \n ");
 		Scanner scanner = new Scanner(System.in);
-	
-		System.out.println("Enter Image full path\n");
-		path= (scanner.next());
-		System.out.println("Enter edit image name\n");
+
+		System.out.println("Enter Image full path\n");// get file path
+		path = (scanner.next());
+		System.out.println("Enter edit image name\n");// get image name
 		String oldimg = (scanner.next());
-		System.out.println("Enter new image name\n");
+		System.out.println("Enter new image name\n");// get new image name
 		String newimg = (scanner.next());
 		scanner.close();
-		image.setOldimg(new Run().checkFile(oldimg));
-		image.setNewimg(new Run().checkFile(newimg));
-//		image.setPath(path);
-		if(checkPath(path)) {
-		
-		if((checkType(image.getPath().concat(image.getOldimg())))==true) {
-			Image_color ic = new Image_imple();
-			ic.Check_image(image);
+		image.setOldimg(new Run().checkFile(oldimg));// set in poso
+		image.setNewimg(new Run().checkFile(newimg));// set in poso
+		if (checkPath(path)) {// check if path is valid
+
+			if ((checkType(image.getPath().concat(image.getOldimg()))) == true) {// check if full image path is valid
+				Image_color ic = new Image_imple(); // call
+				ic.Check_image(image);// call function
+			} else {
+				System.out.println("please check edit  file name " + image.getPath().concat(image.getOldimg()));// return
+																												// error
+																												// for
+																												// file
+			}
+		} else {
+			System.out.println("please check   file path " + image.getPath()); // return error for path
 		}
-		else {
-			System.out.println("please check edit  file name " +image.getPath().concat(image.getOldimg()));
-		}}else {
-			System.out.println("please check   file path "+image.getPath());
-		}
-		
 
 	}
 
+//check file if it contain extension or not
 	private String checkFile(String img) {
 		if (!img.contains(".jpg")) {
 			img = img.concat(".jpg");
-		} else if (!img.contains("\\")) {
+		}
+		if (!img.contains("\\")) {
 			img = "\\" + img;
 		}
 		return img;
 	}
+	// check if file is valid or not
 
 	private boolean checkType(String name) {
 
@@ -66,16 +72,16 @@ public class Run {
 		}
 	}
 
+	// check valid path
 	private boolean checkPath(String paths) {
 		try {
-			
-			paths=paths.replace(image.getOldimg(), "");
+
+			paths = paths.replace(image.getOldimg(), "\\");
 			Path p = Paths.get(paths);
 			image.setPath(paths);
-			
-			
+
 			return Files.exists(p);
-		
+
 		} catch (Exception e) {
 
 			e.printStackTrace();

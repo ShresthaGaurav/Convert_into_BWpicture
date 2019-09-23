@@ -11,6 +11,7 @@ public class Image_imple implements Image_color {
 
 	@Override
 	public void Check_image(Image i) {
+	
 		
 		try {
 			File input = new File(i.getPath().concat(i.getOldimg()));// read file
@@ -27,7 +28,7 @@ public class Image_imple implements Image_color {
 
 			File output = new File(i.getPath() + i.getNewimg()); // create new file
 			ImageIO.write(result, "jpg", output); // image write
-
+			System.out.println("file completed");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
